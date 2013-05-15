@@ -11,6 +11,8 @@
   "license": "AGPL3",
   "dependencies": {
     "cheerio" : "*",
-    "request" : "*"
+    "request" : "*",
+    "jquery"  : "*",
+    "csv"     : "*"
   }
 }

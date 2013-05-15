@@ -1,0 +1,3 @@
+[submodule "libs/jquery-csv"]
+	path = libs/jquery-csv
+	url = https://github.com/mirlord/jquery-csv

@@ -1,11 +1,9 @@
 Traffic / Commute time screenscraper for Google Maps
-===
+====================================================
 
 Work in progress, for monitoring commute time on a given route.
 
 
-LICENSE
-===
 LICENSE
 =======
 

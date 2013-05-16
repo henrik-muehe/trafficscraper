@@ -12,7 +12,7 @@
       }
     </style>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-	
+
 </head>
 <body>
 
@@ -27,12 +27,15 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <span class="span12">
-          <h1> Inbound Traffic (from work)</h1>
-          <div id="traffic_inbound" style="height: 300px;"></div>
-
-          <h1> Outbound Traffic (to work) </h1>
-      		<div id="traffic_outbound" style="height: 300px;"></div>
+          <h1>To Work</h1>
+      		<div id="traffic_outbound"></div>
       	</span>
+      </div>
+      <div class="row-fluid">
+        <span class="span12">
+          <h1>From work</h1>
+          <div id="traffic_inbound"></div>
+        </span>
       </div>
 
       <hr>
@@ -47,6 +50,9 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-	<script src="view.js"></script>
+  <script src="js/can.jquery.min.js"></script>
+  <script src="js/can.fixture.js"></script>
+  <script src="controllers/traffic_graph.js"></script>
+  <script src="view.js"></script>
 </body>
 </html>

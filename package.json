@@ -12,6 +12,6 @@
   "dependencies": {
     "cheerio" : "*",
     "request" : "*",
-    "connect" : "*"
+    "express": "3.x"
   }
 }

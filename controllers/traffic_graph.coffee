@@ -3,6 +3,7 @@ window.TrafficGraph = can.Control
         mode: 'day'
         initialHeight: '300px'
 ,
+    # initialize component
     init: ->
         @url=this.options.url
         @graphId=$(this.element).attr('id')+"_graph"
@@ -11,13 +12,14 @@ window.TrafficGraph = can.Control
         this.element.html can.view('views/traffic_graph.ejs',this.options)
         this.load()
 
+    # determine mode dependend cutoff timestamp
     cutoff: ->
         days=1 if @mode=="day"
         days=7 if @mode=="week"
         days=28 if @mode=="month"
         new Date().getTime()/1000-(days*24*60*60)
 
-
+    # load data from server
     load: ->
         $.get this.options.url,(content)=>
             dataRaw={}
@@ -51,6 +53,7 @@ window.TrafficGraph = can.Control
             hideHover: true
             ymin: 'auto'
 
+    # Fix graph size on resize
     '{window} resize': (el,ev)->
         clearTimeout @timer
         @timer = setTimeout (=> this.draw()) ,100

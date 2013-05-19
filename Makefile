@@ -1,10 +1,10 @@
-all: coffee server
+all: coffee
 
 coffee:
-	coffee -wc *.coffee */*.coffee &
+	coffee -wc *.coffee */*.coffee
 
 server:
-	node server.js &
+	node server.js
 
 .PHONY: all coffee server
 

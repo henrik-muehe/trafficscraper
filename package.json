@@ -12,6 +12,7 @@
   "dependencies": {
     "cheerio" : "*",
     "request" : "*",
-    "express": "3.x"
+    "express": "3.x",
+    "mysql": "2.0.0-alpha8"
   }
 }

@@ -1,23 +1,54 @@
 window.TrafficGraph = can.Control
     defaults:
-        mode: 'day'
         initialHeight: '300px'
 ,
     # initialize component
     init: ->
+        # Set component values
+        @time=1
+        @view='averages'
         @url=this.options.url
         @graphId=$(this.element).attr('id')+"_graph"
-        @mode=this.options.mode
         this.options['id']=@graphId
+
+        # Render view
         this.element.html can.view('views/traffic_graph.ejs',this.options)
+
+        # Add subcontrols
+        @timeToggleGroup=new window.ToggleGroup $(this.element).children('.time'),
+            items: [ { label: 'Day', value: '1' }, { label: 'Week', value: '7' }, { label: 'Month', value: '28' } ]
+            selectedValue: @time
+            change: (value) =>
+                @time=value
+                @load()
+
+        @viewToggleGroup=new window.ToggleGroup $(this.element).children('.view'),
+            items: [ { label: 'Values', value: 'values' }, { label: 'Averages', value: 'averages'} ]
+            selectedValue: @view
+            change: (value) =>
+                @view=value
+                @load()
+
         this.load()
 
-    # determine mode dependend cutoff timestamp
-    cutoff: ->
-        days=1 if @mode=="day"
-        days=7 if @mode=="week"
-        days=28 if @mode=="month"
-        new Date().getTime()/1000-(days*24*60*60)
+    avg: (data,n) ->
+        n=10 if !n
+        newdata=[]
+        datawindow=[]
+        for entry in data
+            datawindow.shift() if datawindow.length == n
+            datawindow.push entry
+            newentry={timestamp: entry.timestamp}
+            for key in @keys
+                count=0
+                sum=0
+                for val in datawindow
+                    if val[key]
+                        sum+=+val[key]
+                        count+=1
+                newentry[key]=sum/count if count>0
+            newdata.push newentry
+        newdata
 
     # load data from server
     load: ->
@@ -29,7 +60,7 @@ window.TrafficGraph = can.Control
                 (dataRaw[timestamp]||={})[route]=minutes
             @data=[]
             keys=[]
-            cutoff=@cutoff()
+            cutoff=new Date().getTime()/1000-(+@time*24*60*60)
             for timestamp,routemap of dataRaw
                 entry={}
                 continue if timestamp<cutoff
@@ -39,6 +70,7 @@ window.TrafficGraph = can.Control
                     keys.push key
                 @data.push entry
             @keys=keys.filter (itm,i,a)->i==a.indexOf(itm)
+            @data=@avg(@data) if @view=='averages'
             @draw()
 
     # Callback loading a traffic log and displaying it as a graph
@@ -52,16 +84,14 @@ window.TrafficGraph = can.Control
             labels: @keys
             hideHover: true
             ymin: 'auto'
+            yLabelFormat: (v) -> Math.round v
+            xLabelFormat: (v) =>
+                switch
+                    when @time > 7 then moment(v).format("dd Do ha")
+                    when @time > 1 then moment(v).format("dd ha")
+                    else moment(v).format("ha")
 
     # Fix graph size on resize
     '{window} resize': (el,ev)->
         clearTimeout @timer
         @timer = setTimeout (=> this.draw()) ,100
-
-    # Recolor active button
-    'button click': (el,ev)->
-        @mode=$(el).attr('mode')
-        $(this.element).find('button').removeClass('btn-primary')
-        $(this.element).find('button[mode="'+@mode+'"]').addClass('btn-primary')
-        @load()
-

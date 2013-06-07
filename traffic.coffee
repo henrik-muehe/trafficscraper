@@ -1,13 +1,22 @@
 cheerio = require('cheerio')
 request = require('request')
+mysql = require('mysql')
 
+# Check parameters
 if process.argv.length != 4
   console.error "traffic.js <from> <to>"
   process.exit 1
-
 from=process.argv[2]
 to=process.argv[3]
 
+# Establish mysql connection
+connection = mysql.createConnection
+  host     : 'localhost'
+  user     : 'traffic'
+  password : 'ijaflkfk322ds'
+  database : 'traffic'
+
+# Scrape callback
 scrapeTraffic=(err,resp,html) ->
   if err
   	return console.error(err)
@@ -31,6 +40,13 @@ scrapeTraffic=(err,resp,html) ->
     route=($(value)).children('div').slice(2,3).text()
     time=+mins+(+hours*60)
     console.log ts + ";" + from + ";" + to + ";" + time + ";" + route
+    record=
+      timestamp: new Date(ts*1000)
+      from: from
+      to: to
+      route: route
+      time: time
+    connection.query "INSERT INTO traffic SET ?", record, (err,res)-> console.error err if err?
 
-
+# Load url and scrape it
 request "http://maps.google.com/maps?saddr="+encodeURIComponent(from)+"&daddr="+encodeURIComponent(to)+"&ie=UTF8", scrapeTraffic

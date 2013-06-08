@@ -13,6 +13,21 @@
     "cheerio" : "*",
     "request" : "*",
     "express": "3.x",
-    "mysql": "2.0.0-alpha8"
+    "mysql": "2.0.0-alpha8",
+    "jamjs": "*",
+    "coffee-script": "*",
+    "jade": "*",
+    "nodemon": "*"
+  },
+  "jam": {
+    "packageDir": "public/jamjs",
+    "baseUrl": "public/",
+    "dependencies": {
+      "jquery": null,
+      "CanJS": null,
+      "moment": null,
+      "morris": null,
+      "bootstrap-core": null
+    }
   }
 }

@@ -1,6 +1,7 @@
 cheerio = require('cheerio')
 request = require('request')
 mysql = require('mysql')
+config = require('./config.js')
 
 # Check parameters
 if process.argv.length != 4
@@ -9,12 +10,8 @@ if process.argv.length != 4
 from=process.argv[2]
 to=process.argv[3]
 
-# Establish mysql connection
-connection = mysql.createConnection
-  host     : 'localhost'
-  user     : 'traffic'
-  password : 'ijaflkfk322ds'
-  database : 'traffic'
+# Connect to database
+connection = mysql.createConnection config.mysql
 
 # Scrape callback
 scrapeTraffic=(err,resp,html) ->

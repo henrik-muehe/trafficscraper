@@ -1,4 +1,6 @@
 *.log
+*.pid
+*.txt
 node_modules
 *.err
 *.js

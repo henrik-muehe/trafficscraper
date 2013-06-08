@@ -1,7 +1,22 @@
-Traffic / Commute time screenscraper for Google Maps
+Traffic / Commute Time Screenscraper
 ====================================================
 
 Work in progress, for monitoring commute time on a given route.
+
+Deploy
+------
+
+	git clone https://github.com/henrik-muehe/trafficscraper.git
+	cd trafficscraper
+	make install
+
+Then find a mysql database, adjust `config.coffee`, `make`, add cronjobs
+which run `node traffic "from" "to" > traffic_VARIABLE_inbound.log` and
+`node traffic "to" "from" > traffic_VARIABLE_outbound.log` and you should
+be all set. You can access the record at http://localhost:8080/?VARIABLE.
+
+This -- honestly -- is not made for massive deployment and ease of use. Push
+requests -- as always -- welcome.
 
 
 LICENSE

@@ -10,7 +10,7 @@ Deploy
 	cd trafficscraper
 	make install
 
-Then find a mysql database, adjust `config.coffee`, `make`, add cronjobs
+Then find a mysql database, load `traffic.sql`, adjust `config.coffee`, `make`, add cronjobs
 which run `node traffic "from" "to" > traffic_VARIABLE_inbound.log` and
 `node traffic "to" "from" > traffic_VARIABLE_outbound.log` and you should
 be all set. You can access the record at http://localhost:8080/?VARIABLE.

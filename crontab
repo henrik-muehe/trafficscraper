@@ -1,0 +1,7 @@
+*/10 * * * * cd /src/ ; node traffic "Boltzmannstr. Garching" "Theresienwiese Muenchen" >> traffic_muc_inbound.txt
+*/10 * * * * cd /src/ ; node traffic "Theresienwiese Muenchen" "Boltzmannstr. Garching" >> traffic_muc_outbound.txt
+*/10 * * * * cd /src/ ; node traffic "San Francisco" "Redwood Shores" >> traffic_sfo_inbound.txt
+*/10 * * * * cd /src/ ; node traffic "Redwood Shores" "San Francisco" >> traffic_sfo_outbound.txt
+*/10 * * * * cd /src/ ; node traffic "München" "Augsburg" >> traffic_aug_inbound.txt
+*/10 * * * * cd /src/ ; node traffic "Augsburg" "München" >> traffic_aug_outbound.txt
+0 * * * * sleep 60 ; pkill -f traffic

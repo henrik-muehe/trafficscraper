@@ -2,5 +2,5 @@ module.exports=
 	mysql:
 		host: 'localhost'
 		user: 'traffic'
-		password: ':-)'
+		password: 'some_password'
 		database: 'traffic'
